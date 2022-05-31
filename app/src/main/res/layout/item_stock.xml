@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="0dp"
+    app:cardCornerRadius="25dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutStock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/stock_background">
+
+        <LinearLayout
+            android:id="@+id/linearLayoutStock"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/frameLayoutQuote"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textStockName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="2sp"
+                android:textColor="#1A1A1A"
+                android:textSize="18sp"
+                tools:text="Apple" />
+
+            <TextView
+                android:id="@+id/textStockDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="1sp"
+                android:textColor="#1A1A1A"
+                android:textSize="12sp"
+                tools:text="Apple Inc." />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/frameLayoutQuote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/linearLayoutQuote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:lineSpacingExtra="2sp"
+                    android:textColor="#1A1A1A"
+                    android:textSize="18sp"
+                    tools:text="$131.93" />
+
+
+                <TextView
+                    android:id="@+id/textPriceDayDelta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:lineSpacingExtra="1sp"
+                    android:textColor="@color/default_stock_color"
+                    android:textSize="12sp"
+                    tools:text="+$0.12 (1,15%)" />
+            </LinearLayout>
+
+
+            <ProgressBar
+                android:id="@+id/progressStockPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/textError"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:maxHeight="60dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                tools:text="No loaded Quote" />
+        </FrameLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
