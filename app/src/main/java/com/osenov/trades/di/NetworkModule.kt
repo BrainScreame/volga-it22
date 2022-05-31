@@ -1,6 +1,7 @@
 package com.osenov.trades.di
 
 import com.google.gson.Gson
+import com.osenov.trades.BuildConfig
 import com.osenov.trades.Config.STOCK_URL
 import com.osenov.trades.data.remote.StockService
 import dagger.Module
@@ -24,7 +25,7 @@ class NetworkModule {
         return OkHttpClient.Builder()
             .addInterceptor {
                 val newUrl = it.request().url.newBuilder()
-                    .addQueryParameter("token", "c91conaad3i84i3i86r0").build()
+                    .addQueryParameter("token", BuildConfig.USER_ACCESS_TOKEN).build()
                 it.proceed(it.request().newBuilder().url(newUrl).build())
             }
             //.addInterceptor(logging)
