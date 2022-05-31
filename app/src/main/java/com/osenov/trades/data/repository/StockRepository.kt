@@ -1,29 +1,21 @@
 package com.osenov.trades.data.repository
 
-import android.util.Log
+import com.osenov.trades.data.local.StockDao
+import com.osenov.trades.data.local.room_entity.StockEntity
 import com.osenov.trades.data.remote.StockRemoteDataSource
-import com.osenov.trades.data.remote.WebServicesProvider
 import com.osenov.trades.domain.entity.Quote
-import com.osenov.trades.domain.entity.StockSymbol
 import com.osenov.trades.domain.entity.StockUI
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flow
-import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 
-
-class SocketRepository @Inject constructor(
+class StockRepository @Inject constructor(
     private val stockRemoteDataSource: StockRemoteDataSource,
-    private val webServicesProvider: WebServicesProvider
+    private val stockDao: StockDao
 ) {
     suspend fun getStocks(): Result<List<StockUI>> {
         return try {
             val response = stockRemoteDataSource.fetchStocks()
             if (response.isSuccessful) {
-                Result.success(response.body()?.map { it.toStockUI() } ?: listOf())
+                Result.success(response.body()?.map { it.toStockUI() } ?: emptyList())
             } else {
                 Result.failure(Throwable(response.errorBody().toString()))
             }
@@ -36,7 +28,7 @@ class SocketRepository @Inject constructor(
         return try {
             val response = stockRemoteDataSource.fetchStocks(query)
             if (response.isSuccessful) {
-                Result.success(response.body()?.result?.map { it.toStockUI() } ?: listOf())
+                Result.success(response.body()?.result?.map { it.toStockUI() } ?: emptyList())
             } else {
                 Result.failure(Throwable(response.errorBody().toString()))
             }
@@ -47,19 +39,26 @@ class SocketRepository @Inject constructor(
 
     suspend fun getQuote(symbol: String): Result<Quote> {
         return try {
+            //with flow get problem https://youtrack.jetbrains.com/issue/KT-27105
+//            val dbResult = stockDao.getStockPrice(symbol)
+//            dbResult?.let {
+//                Result.success(it.quote)
+//            }
             val response = stockRemoteDataSource.fetchQuote(symbol)
             if (response.isSuccessful) {
-                Result.success(response.body()!!)
+                val body = response.body()!!
+                stockDao.insertStock(StockEntity(symbol, body))
+                Result.success(body)
             } else {
-                Result.failure(Throwable(response.errorBody().toString()))
+                if (response.code() == 403) {
+                    Result.failure(Throwable("You don't have access to this resource"))
+                } else {
+                    Result.failure(Throwable(response.errorBody().toString()))
+                }
             }
         } catch (t: Throwable) {
-            Result.failure(t)
+            Result.failure(Throwable("No internet connections"))
         }
     }
-
-    fun startSocket(tickers: List<String>) = webServicesProvider.startSocket(tickers)
-
-    fun closeSocket() = webServicesProvider.stopSocket()
 
 }

@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -39,11 +40,11 @@ android {
 dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.5.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-            testImplementation 'junit:junit:4.+'
-            androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-            androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation 'com.google.android.material:material:1.6.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     def lifecycleVersion = '2.4.1'
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
@@ -53,7 +54,7 @@ dependencies {
     //Kotlin Coroutines
     def coroutines_core_version = "1.6.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_core_version"
-    def coroutines_android_version = "1.5.21"
+    def coroutines_android_version = "1.6.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_android_version"
 
     //OkHttp
@@ -67,7 +68,7 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     //Gson
-    def gson_version = "2.8.6"
+    def gson_version = "2.8.9"
     implementation "com.google.code.gson:gson:$gson_version"
 
     //Retrofit
@@ -76,9 +77,17 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
     // Navigation
-    def nav_version = "2.4.1"
+    def nav_version = "2.4.2"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
+    //guava
     implementation "com.google.guava:guava:31.1-jre"
+
+    //Room
+    def room_version = "2.4.2"
+    implementation "androidx.room:room-ktx:$room_version"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
 }

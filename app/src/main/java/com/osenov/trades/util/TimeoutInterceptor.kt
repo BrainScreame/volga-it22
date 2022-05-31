@@ -1,4 +1,4 @@
-package com.osenov.trades.data
+package com.osenov.trades.util
 
 import com.google.common.util.concurrent.RateLimiter
 import okhttp3.Interceptor

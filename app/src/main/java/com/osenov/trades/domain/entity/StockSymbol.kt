@@ -12,9 +12,7 @@ data class StockSymbol(
     val shareClassFIGI: String,
     @SerializedName("symbol") val stockSymbol: String,
     @SerializedName("symbol2") val alternativeStockSymbol: String,
-    val type: String,
-    var quote: Quote? = null,
-    var trade: Trade? = null
+    val type: String
 ) {
     fun toStockUI() = StockUI(displaySymbol, description)
 }

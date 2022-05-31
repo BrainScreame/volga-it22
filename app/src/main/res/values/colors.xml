@@ -13,4 +13,5 @@
     <color name="stock_decrease_color">#B22424</color>
 
     <color name="stock_background">#F0F4F7</color>
+    <color name="gray_500">#959595</color>
 </resources>

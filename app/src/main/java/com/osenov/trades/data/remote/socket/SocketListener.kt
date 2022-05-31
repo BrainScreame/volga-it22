@@ -1,4 +1,4 @@
-package com.osenov.trades.data.remote
+package com.osenov.trades.data.remote.socket
 
 import android.util.Log
 import com.google.gson.Gson
@@ -14,6 +14,9 @@ import okhttp3.WebSocketListener
 import javax.inject.Inject
 
 class SocketListener @Inject constructor() : WebSocketListener() {
+    companion object {
+        const val SOCKET_STOCK_TAG = "SOCKET_STOCK_TAG"
+    }
 
     var socketFlow = MutableSharedFlow<List<Trade>>(
         extraBufferCapacity = 1,
@@ -22,7 +25,7 @@ class SocketListener @Inject constructor() : WebSocketListener() {
 
     override fun onOpen(webSocket: WebSocket, response: Response) {
         super.onOpen(webSocket, response)
-        Log.i("MySocket", "Socket response: $response")
+        Log.i(SOCKET_STOCK_TAG, "Socket response: $response")
     }
 
     override fun onMessage(webSocket: WebSocket, text: String) {
@@ -32,24 +35,25 @@ class SocketListener @Inject constructor() : WebSocketListener() {
 
     override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
         super.onClosing(webSocket, code, reason)
-        Log.i("MySocket", "onClosing with code: $code")
+        Log.i(SOCKET_STOCK_TAG, "onClosing with code: $code")
     }
 
     override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
         super.onClosed(webSocket, code, reason)
-        Log.i("MySocket", "onClosed with code: $code")
+        Log.i(SOCKET_STOCK_TAG, "onClosed with code: $code")
     }
 
 
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
         super.onFailure(webSocket, t, response)
-        Log.i("MySocket", "Throwable: $t")
-        Log.i("MySocket", "Throwable: $response")
+        Log.i(SOCKET_STOCK_TAG, "Throwable: $t")
+        Log.i(SOCKET_STOCK_TAG, "Throwable: $response")
     }
 
     private fun updatePriceInDatabase(string: String) {
         val response = Gson().fromJson(string, ResponseSocket::class.java)
 
+        //TODO provide viewModelScope and changeGlobalScope to viewModelScope
         response.data?.let {
             GlobalScope.launch {
                 socketFlow.emit(it)

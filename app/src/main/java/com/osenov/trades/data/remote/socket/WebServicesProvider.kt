@@ -1,27 +1,20 @@
-package com.osenov.trades.data.remote
+package com.osenov.trades.data.remote.socket
 
 import android.util.Log
-import com.google.gson.Gson
 import com.osenov.trades.Config.STOCK_SOCKET_URL
-import com.osenov.trades.data.remote.SocketListener
-import com.osenov.trades.domain.entity.ResponseSocket
+import com.osenov.trades.data.remote.socket.SocketListener.Companion.SOCKET_STOCK_TAG
 import com.osenov.trades.domain.entity.Trade
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.WebSocket
-import okhttp3.WebSocketListener
-import okio.ByteString
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class WebServicesProvider @Inject constructor(private val listener: SocketListener) {
 
     private val socketClient = OkHttpClient.Builder().build()
 
-    private var webSocket: WebSocket = socketClient.newWebSocket(
+    private val webSocket: WebSocket = socketClient.newWebSocket(
         Request.Builder().url(STOCK_SOCKET_URL).build(), listener
     )
 
@@ -50,12 +43,12 @@ class WebServicesProvider @Inject constructor(private val listener: SocketListen
             when (usingTickers[item.key]) {
                 1 -> {
                     webSocket.send("{\"type\":\"unsubscribe\",\"symbol\":\"${item.key}\"}")
-                    Log.i("MySocket", "unsubscribe: ${item.key}")
+                    //Log.i(SOCKET_STOCK_TAG, "unsubscribe: ${item.key}")
                     iterator.remove()
                 }
                 -1 -> {
                     webSocket.send("{\"type\":\"subscribe\",\"symbol\":\"${item.key}\"}")
-                    Log.i("MySocket", "subscribe: ${item.key}")
+                    //Log.i(SOCKET_STOCK_TAG, "subscribe: ${item.key}")
                     usingTickers[item.key] = 1
                 }
                 else -> {
@@ -66,7 +59,7 @@ class WebServicesProvider @Inject constructor(private val listener: SocketListen
     }
 
     fun stopSocket() {
-        Log.i("MySocket", "close socket:")
+        Log.i(SOCKET_STOCK_TAG, "close socket:")
         webSocket.close(NORMAL_CLOSURE_STATUS, "app closed socket")
     }
 

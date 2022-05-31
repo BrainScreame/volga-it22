@@ -93,14 +93,15 @@
 
             <ProgressBar
                 android:id="@+id/progressStockPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
                 android:visibility="gone"
                 android:layout_gravity="center"/>
 
             <TextView
                 android:id="@+id/textError"
-                android:layout_width="60dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:maxHeight="60dp"
                 android:layout_gravity="center"

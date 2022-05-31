@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Trades</string>
     <string name="search_text">Find company or ticker</string>
+    <string name="empty_list">Stocks not found</string>
+
+    <string name="stock_price">$%1$g</string>
+    <string name="stock_price_change">"$%1$g (%2$g%%)"</string>
+    <string name="stock_price_change_rise">"+$%1$g (%2$g%%)"</string>
+    <string name="stock_price_change_decrease">"-$%1$g (%2$g%%)"</string>
 </resources>
