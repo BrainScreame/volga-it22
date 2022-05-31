@@ -10,7 +10,7 @@
 - [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) for dependency injection.
 - Jetpack
   - ViewModel
-  - Navigation
+  - Room
 - Architecture
   - MVVM Architecture (View - ViewModel - Model)
   - Clean Architecture
