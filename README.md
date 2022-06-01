@@ -2,8 +2,6 @@
 <br>
 <img src="/preview/screen.png" width="336" align="right" hspace="20">
 
-## [Detailed task condition](https://docs.google.com/document/d/1DGTNxuDqqxOytIUBvCwtJ8IPv-LY9K6DqDRno2DMIK0/edit#)
-
 ## Tech stack
 - Minimum SDK level 21
 - [Kotlin](https://kotlinlang.org/) based, [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) + [Flow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/) for asynchronous.
